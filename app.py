@@ -35,7 +35,8 @@ TARGET_COL = "default"
 
 # 3) THÀNH PHẦN 1: SIDEBAR — VÙNG CẤU HÌNH
 with st.sidebar:
-    st.header("⚙️ Cấu hình & Tải dữ liệu")
+    # Sử dụng khối màu để làm nổi bật tiêu đề phân vùng cấu hình
+    st.info("### ⚙️ Cấu hình & Tải dữ liệu")
     
     # Tải dữ liệu
     uploaded_file = st.file_uploader(
@@ -90,7 +91,8 @@ if df is None or df.empty:
     st.error("Tệp dữ liệu trống hoặc không đúng định dạng. Vui lòng kiểm tra lại.")
     st.stop()
 
-st.caption(f"📁 Đang dùng tệp: **{uploaded_file.name}** | Số dòng: {df.shape[0]} | Số cột: {df.shape[1]}")
+# Tô màu xanh nhẹ cho phần trạng thái tệp dữ liệu đã nạp thành công
+st.success(f"📁 Đang dùng tệp: **{uploaded_file.name}** | Số dòng: {df.shape[0]} | Số cột: {df.shape[1]}")
 st.divider()
 
 # 5) KHỐI HUẤN LUYỆN (Chạy khi bấm nút và lưu vào session_state)
@@ -214,7 +216,9 @@ with tab3:
     else:
         metrics = st.session_state['metrics']
         
-        st.subheader("Các chỉ số đánh giá hiệu năng mô hình (Tập Test)")
+        # Thêm thông báo màu sắc phân vùng kết quả huấn luyện
+        st.success("### ✅ Kết quả đánh giá hiệu năng mô hình (Tập Test)")
+        
         m_col1, m_col2, m_col3, m_col4 = st.columns(4)
         m_col1.metric("Độ chính xác (Accuracy)", f"{metrics['accuracy']:.4f}")
         m_col2.metric("Độ chuẩn xác (Precision)", f"{metrics['precision']:.4f}", help="Tỷ lệ giao dịch cảnh báo gian lận chính xác thực tế")
@@ -258,6 +262,9 @@ with tab4:
         st.info("⚠️ Vui lòng huấn luyện mô hình thành công tại Sidebar trước khi thực hiện chức năng dự báo rủi ro.")
     else:
         model = st.session_state['trained_model']
+        
+        # Sử dụng thông báo khối màu xanh dương để định hướng chọn chế độ
+        st.info("### 🔮 Phân tích & Dự báo giao dịch mới")
         
         mode = st.radio(
             "Chọn phương thức nhập dữ liệu đầu vào:",
